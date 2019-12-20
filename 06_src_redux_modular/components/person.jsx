@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 
 export default class Person extends Component {
 
-
 	add = ()=>{
 		const {name,age} = this.refs
 		this.props.addPerson({name:name.value,age:age.value})
 	}
-
+	
 	render() {
 		return (
 			<div>
