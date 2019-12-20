@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import CounterContainer from './container/counter_container'
+import Counter from './components/counter'
 
 export default class App extends Component {
 	render(){
+		const {store} = this.props
 		return (
-			<CounterContainer/>
+			<Counter store={store}/>
 		)
 	}	
 }
