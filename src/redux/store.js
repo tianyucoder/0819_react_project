@@ -2,5 +2,5 @@
 import {createStore} from 'redux'
 //引入reducer，用于真正操作状态
 import reducer from './reducer'
-
-createStore(reducer)
+//暴露store
+export default createStore(reducer)
