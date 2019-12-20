@@ -6,3 +6,10 @@
 		5.用户名的声明式验证(getFieldDecorator配置rules)
 		6.密码的自定义验证(getFieldDecorator配置validator)
 		7.表单的统一验证(validateFields)
+
+### day02任务
+		1.redux的基本使用
+		2.react-redux的使用
+		3.react-redux异步action
+		4.redux开发工具的使用
+		5.redux模块化编码
