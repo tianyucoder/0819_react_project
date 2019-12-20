@@ -2,41 +2,41 @@ import React, { Component } from 'react'
 
 export default class App extends Component {
 
-	//state = {count:0}
+	state = {count:0}
 
 	//加
 	increment = ()=>{
 		const {selected_number} = this.refs
-		//const {count} = this.state 
-		//this.setState({count:count+selected_number.value*1})
+		const {count} = this.state 
+		this.setState({count:count+selected_number.value*1})
 	}
 	//减
 	decrement = ()=>{
 		const {selected_number} = this.refs
-		//const {count} = this.state 
-		//this.setState({count:count-selected_number.value*1})
+		const {count} = this.state 
+		this.setState({count:count-selected_number.value*1})
 	}
 	//奇数加
 	incrementIfOdd = ()=>{
 		const {selected_number} = this.refs
-		//const {count} = this.state 
-		//if(count%2 === 1){
-			//this.setState({count:count+selected_number.value*1})
-		//}
+		const {count} = this.state 
+		if(count%2 === 1){
+			this.setState({count:count+selected_number.value*1})
+		}
 	}
 	//延迟加
 	incrementAsync = ()=>{
 		const {selected_number} = this.refs
-		//const {count} = this.state 
+		const {count} = this.state 
 		setTimeout(()=>{
-			//this.setState({count:count+selected_number.value*1})
+			this.setState({count:count+selected_number.value*1})
 		},500)
 	}
 
 	render() {
 		return (
 			<div>
-				<span>count is 900</span><br/>&nbsp;
+				<span>count is {this.state.count}</span><br/>&nbsp;
 				<select ref="selected_number">
 					<option value="1">1</option>
 					<option value="2">2</option>
