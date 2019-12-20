@@ -22,7 +22,9 @@ export default class Counter extends Component {
 	//延迟加
 	incrementAsync = ()=>{
 		const {selected_number} = this.refs
-		this.props.incrementAsync(selected_number.value*1,500)
+		setTimeout(()=>{
+			this.props.increment(selected_number.value*1)
+		},500)
 	}
 
 	render() {
