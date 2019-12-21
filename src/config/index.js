@@ -1,0 +1,1 @@
+export const BASE_URL = ''  //请求的基本路径
