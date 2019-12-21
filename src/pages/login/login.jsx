@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button,message} from 'antd';
+import {connect} from 'react-redux'
+import {} from ''
 import {reqLogin} from '../../api'
 import logo from './images/logo.png'
 import './css/login.less'
 const {Item} = Form
 
 class Login extends Component {
-
 	//响应表单的提交
 	handleSubmit = (event)=>{
 		event.preventDefault()
@@ -19,6 +20,7 @@ class Login extends Component {
 					console.log(data);
 					message.success('登录成功',1)
 					this.props.history.push('/admin')
+					//此处把data交给redux管理
 				}else{
 					message.warning(msg,1)
 				}
