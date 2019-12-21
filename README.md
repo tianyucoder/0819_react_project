@@ -13,3 +13,6 @@
 		3.react-redux异步action
 		4.redux开发工具的使用
 		5.redux模块化编码
+
+### day03任务
+		1.

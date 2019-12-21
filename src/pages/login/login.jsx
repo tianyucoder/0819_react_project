@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button} from 'antd';
+import axios from 'axios'
 import logo from './images/logo.png'
 import './css/login.less'
 const {Item} = Form
@@ -12,7 +13,11 @@ class Login extends Component {
 		this.props.form.validateFields((err, values) => {
 			//进行表单最后一步统一验证
       if (!err) {
-        console.log('发送请求', values);
+				//console.log('发送请求', values);
+				axios.post('http://localhost:3000/login',`username=${values.username}&password=${values.password}`).then(
+						response => console.log(response),
+						error => console.log(error),
+				)
 			}
     });
 	}
@@ -89,31 +94,3 @@ class Login extends Component {
 
 //加工我们缩写的Login组件，生成一个新的WrappedLogin组件，页面真正渲染的是WrappedLogin组件
 export default Form.create()(Login);
-
-
-/*
-  总结：
-    1. 高阶函数
-      定义: 如果函数接收的参数是函数或者返回值是函数
-      例子: Promise() / then() / 定时器 / 数组遍历相关方法 / bind() / $() / $.get() / Form.create()
-			好处: 更加动态, 更加具有扩展性
-
-		2. 高阶组件
-		定义: 接收一个组件且返回一个新组件
-		例子: Form.create()(组件) / withRouter(组件) / connect()(组件)
-		高阶组件与高阶函数的关系?
-          高阶组件是一个特别的高阶函数
-          接收的是组件函数, 同时返回新的组件函数
-		作用:
-				React 中用于复用组件逻辑的一种高级技巧
-*/
-
-//create方法的原理
-/* 
-function create (TargetComponent) {
-	return class WrappedComponent extends Component{
-		render(){
-			return <TargetComponent form=内置的Form对象/>
-		}
-	}
-} */
