@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Icon, Input, Button} from 'antd';
-import myAxios from '../../api/myAxios'
+import { Form, Icon, Input, Button,message} from 'antd';
+import {reqLogin} from '../../api'
 import logo from './images/logo.png'
 import './css/login.less'
 const {Item} = Form
@@ -13,13 +13,15 @@ class Login extends Component {
 		this.props.form.validateFields(async(err, values) => {
 			//进行表单最后一步统一验证
       if (!err) {
-				//console.log('发送请求', values);
-				/* myAxios.post('http://localhost:3000/login',values).then(
-						response => console.log(response),
-						error => console.log(error),
-				) */
-				let result = await myAxios.post('/login',values)
-				console.log('成功了',result);
+				let loginResult = await reqLogin(values)
+				const {status,data,msg} = loginResult
+				if(status === 0){
+					console.log(data);
+					message.success('登录成功',1)
+					this.props.history.push('/admin')
+				}else{
+					message.warning(msg,1)
+				}
 			}
     });
 	}
