@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button,message} from 'antd';
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {saveUserInfo} from '../../redux/actions/login_action'
 import {reqLogin} from '../../api'
 import logo from './images/logo.png'
@@ -44,6 +45,11 @@ class Login extends Component {
 	}
 
 	render() {
+		if(this.props.userInfo.isLogin){
+			//进入此判断，意味着：用户已经登录，但是还要看login，不允许，强制跳转到admin
+			//this.props.history.replace('/admin')
+			return <Redirect to="/admin"/>
+		}
 		const { getFieldDecorator } = this.props.form;
 		return (
 			<div id="login">
@@ -100,6 +106,6 @@ class Login extends Component {
 }
 
 export default connect(
-	state => ({}),
+	state => ({userInfo:state.userInfo}),
 	{saveUserInfo}
 )(Form.create()(Login))
