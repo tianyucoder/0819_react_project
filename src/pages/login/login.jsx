@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, Button,message} from 'antd';
 import {connect} from 'react-redux'
-import {} from ''
+import {saveUserInfo} from '../../redux/actions/login_action'
 import {reqLogin} from '../../api'
 import logo from './images/logo.png'
 import './css/login.less'
@@ -21,6 +21,7 @@ class Login extends Component {
 					message.success('登录成功',1)
 					this.props.history.push('/admin')
 					//此处把data交给redux管理
+					this.props.saveUserInfo(data)
 				}else{
 					message.warning(msg,1)
 				}
@@ -98,5 +99,7 @@ class Login extends Component {
 	}
 }
 
-//加工我们缩写的Login组件，生成一个新的WrappedLogin组件，页面真正渲染的是WrappedLogin组件
-export default Form.create()(Login);
+export default connect(
+	state => ({}),
+	{saveUserInfo}
+)(Form.create()(Login))
