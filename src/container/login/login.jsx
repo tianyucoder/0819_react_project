@@ -24,7 +24,6 @@ class Login extends Component {
 				let loginResult = await reqLogin(values)
 				const {status,data,msg} = loginResult
 				if(status === 0){
-					console.log(data);
 					message.success('登录成功',1)
 					this.props.history.push('/admin')
 					//此处把data交给redux管理
