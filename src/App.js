@@ -31,9 +31,6 @@ console.log(MyClass.a,MyClass.b);  */
 
 
 
-
-
-
 //情况二：装饰器函数有return，return的为非函数
 /* 	function demo(target) {
 			target.a = 1
@@ -46,9 +43,9 @@ console.log(MyClass.a,MyClass.b);  */
 @demo
 class MyClass {}
 
-//相当与：MyClass = demo(MyClass)
+//相当与：MyClass = demo(MyClass) 
 
-console.log(MyClass.a,MyClass.b);  */
+console.log(MyClass.a,MyClass.b); */
 
 
 

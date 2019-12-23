@@ -1,17 +1,57 @@
 import React, { Component } from 'react'
-import {Icon,Button} from 'antd';
+import {Icon,Button,Modal} from 'antd';
+import {connect} from 'react-redux'
+import {deleteUserInfo} from '../../../redux/actions/login_action'
+import screenfull from 'screenfull'
 import './header.less'
 
-export default class Header extends Component {
+const {confirm} = Modal;
+
+@connect(
+	state => ({userInfo:state.userInfo}),
+	{deleteUserInfo}
+)
+class Header extends Component {
+
+	state = {
+		isFull:false
+	}
+
+	//退出登录
+	logout = ()=>{
+		confirm({
+			title: '确定退出吗？',
+			content: '若退出需要重新登录',
+			cancelText:'取消',
+			okText:'确定',
+			onOk:()=> {
+				this.props.deleteUserInfo()
+			},
+		});
+	}
+
+	//全屏切换
+	switchFullScreen = ()=>{
+		screenfull.toggle();
+	}
+
+	componentDidMount(){
+		screenfull.on('change',()=>{
+			let {isFull} = this.state
+			this.setState({isFull:!isFull})
+		})
+	}
+
 	render() {
+		const {username} = this.props.userInfo.user
 		return (
 			<div className="header">
 				<div className="header-top">
-					<Button size="small">
-						<Icon type="fullscreen"/>
+					<Button size="small" onClick={this.switchFullScreen}>
+						<Icon type={this.state.isFull ? 'fullscreen-exit' : 'fullscreen'}/>
 					</Button>
-					<span>hello,atguigu</span>
-					<Button href="#1" size="small" type="link">退出登录</Button>
+					<span>欢迎,{username}</span>
+					<Button size="small" type="link" onClick={this.logout}>退出登录</Button>
 				</div>
 				<div className="header-bottom">
 					<div className="header-bottom-left">
@@ -27,3 +67,4 @@ export default class Header extends Component {
 		)
 	}
 }
+export default Header

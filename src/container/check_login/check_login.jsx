@@ -15,7 +15,7 @@ export default function (CurrentComponent) {
 			//想去login，但是登录了，不允许，跳转到admin
 			const {pathname} = this.props.history.location;
 			if(pathname === '/login' && this.props.isLogin) return <Redirect to="/admin"/>
-			if(pathname === '/admin' && !this.props.isLogin) return <Redirect to="/login"/>
+			if(pathname !== '/login' && !this.props.isLogin) return <Redirect to="/login"/>
 			return <CurrentComponent {...params}/>
 		}
 	}
