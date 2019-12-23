@@ -8,6 +8,11 @@ import logo from './images/logo.png'
 import './css/login.less'
 const {Item} = Form
 
+@connect(
+	state => ({userInfo:state.userInfo}),//映射状态
+	{saveUserInfo}//映射操作状态的方法
+)
+@Form.create()
 class Login extends Component {
 	//响应表单的提交
 	handleSubmit = (event)=>{
@@ -105,7 +110,4 @@ class Login extends Component {
 	}
 }
 
-export default connect(
-	state => ({userInfo:state.userInfo}),
-	{saveUserInfo}
-)(Form.create()(Login))
+export default Login

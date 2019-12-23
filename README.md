@@ -23,3 +23,6 @@
 		6.维持用户登录状态
 		7.redux保管已登录用户信息
 		8.退出登录
+
+### day04任务
+		1.装饰器语法的使用，需要安装：yarn add @babel/plugin-proposal-decorators
