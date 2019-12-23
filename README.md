@@ -33,5 +33,6 @@
 		3.编写Admin静态布局（使用了antd的Layout组件）
 		4.编写Header静态布局
 		5.完成退出登录
-		5.使用screenfull库完成全屏切换
-		6.完成天气展示（使用jsonp请求百度接口）
+		6.使用screenfull库完成全屏切换
+		7.完成天气展示（使用jsonp请求百度接口）
+		8.让所有请求统一携带token
