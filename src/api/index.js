@@ -5,7 +5,7 @@ import {WEATHER_AK,WEATHER_CITY,WEATHER_BASE_URL} from '../config'
 
 //项目中所有的ajax请求，都由该模块统一管理
 export const reqLogin = (loginObj)=> myAxios.post('/login',loginObj)
-//请求天气信息
+//请求天气信息（使用jsonp的方式）
 export const reqWeatherData = () => {
 	return new Promise((resolve,reject)=>{
 		jsonp(`${WEATHER_BASE_URL}?location=${WEATHER_CITY}&output=json&ak=${WEATHER_AK}`,(err,data)=>{
@@ -17,4 +17,6 @@ export const reqWeatherData = () => {
 		})
 	})
 }
+//请求商品分类信息
+export const reqCategory = () => myAxios.get('/manage/category/list')
 

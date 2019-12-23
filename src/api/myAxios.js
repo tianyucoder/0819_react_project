@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {message} from 'antd'
 import NProgress from 'nprogress'
+import store from '../redux/store'
 import {BASE_URL} from '../config'
 import qs from 'querystring'
 import 'nprogress/nprogress.css'
@@ -11,6 +12,10 @@ axios.defaults.baseURL = BASE_URL
 //请求拦截器
 axios.interceptors.request.use((config)=>{
 	NProgress.start()//进度条开始
+	//1.获取已经保存的token
+	let {token} = store.getState().userInfo
+	//2.携带token
+	if(token) config.headers.Authorization = 'atguigu_' + token
 	let {method,data} = config
 	//统一处理将所有post参数都改为urlencoded形式
 	if(method.toUpperCase() === 'POST' && data instanceof Object){
