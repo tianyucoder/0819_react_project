@@ -12,9 +12,14 @@ const {Item} = Form
 )
 @Form.create()
 class Category extends Component {
-	state = {visible:false};
+
+	state = {
+		visible:false //是否展示Modal提示框
+	};
 	
 	componentDidMount(){
+		//分发一个异步action去获取所有商品分类列表
+		//注意：并没有直接在当前组件中发送ajax请求（与Login页面对比），而是将ajax请求交给了异步action
 		this.props.getCategoryListAsync()
 	}
 
@@ -62,18 +67,18 @@ class Category extends Component {
 			<div>
 				<Card extra={<Button type="primary" onClick={this.showModal}><Icon type="plus-circle"/>添加</Button>}>
 					<Table 
-						dataSource={dataSource} 
-						columns={columns}
-						bordered
-						rowKey="_id"
-						pagination={{pageSize:PAGE_SIZE}}
+						dataSource={dataSource} //表格数据
+						columns={columns} //表格列设置
+						bordered //显示边框
+						rowKey="_id" //设置key的取值
+						pagination={{pageSize:PAGE_SIZE}} //每页展示数据条数
 					/>
 				</Card>
 				<Modal
 					title="新增分类"
-					visible={this.state.visible}
-					onOk={this.handleOk}
-					onCancel={this.handleCancel}
+					visible={this.state.visible} //是否展示弹窗
+					onOk={this.handleOk} //点击确认的回调
+					onCancel={this.handleCancel} //点击取消的回调
 					okText='确认'
 					cancelText='取消'
 				>
