@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import {Card,Button,Icon,Table,Modal,Form,Input} from 'antd';
+import {Card,Button,Icon,Table,Modal,Form,Input, message} from 'antd';
 import {connect} from 'react-redux'
+import {reqAddCategory} from '../../api'
 import {PAGE_SIZE} from '../../config'
 import {getCategoryListAsync} from '../../redux/actions/category_action'
 
@@ -30,16 +31,27 @@ class Category extends Component {
 
 	//确认的回调
   handleOk = () => {
-    this.setState({
-      visible: false,
-    });
+		//1.获取用户的输入
+		this.props.form.validateFields(async(err, values) => {
+      if (!err) {
+				let addResult = await reqAddCategory(values)
+				const {status,data,msg} = addResult
+				if(status === 0){
+					message.success('添加分类成功',1)
+					this.props.getCategoryListAsync()
+					this.setState({visible:false})
+					this.props.form.resetFields()
+				}else{
+					message.warning(msg,1)
+				}
+      }
+		});
   };
 
 	//取消的回调
   handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
+		this.props.form.resetFields()
+    this.setState({visible: false,});
 	};
 	
 	render() {
