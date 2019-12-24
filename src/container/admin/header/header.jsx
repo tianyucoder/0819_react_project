@@ -6,14 +6,15 @@ import dayjs from 'dayjs'
 import {reqWeatherData} from '../../../api'
 import menuList from '../../../config/menu-config'
 import {deleteUserInfo} from '../../../redux/actions/login_action'
+import {saveMenuTitle} from '../../../redux/actions/menu_action'
 import screenfull from 'screenfull'
 import './header.less'
 
 const {confirm} = Modal;
 
 @connect(
-	state => ({userInfo:state.userInfo}),
-	{deleteUserInfo}
+	state => ({userInfo:state.userInfo,title:state.title}),
+	{deleteUserInfo,saveMenuTitle}
 )
 @withRouter
 class Header extends Component {
@@ -71,7 +72,9 @@ class Header extends Component {
 		clearInterval(this.time)
 	}
 
+	//根据菜单的key匹配菜单的title
 	getTitle = (menuKey)=>{
+		console.log('----redux中没有title，只能靠getTitle计算---------');
 		let title = ''
 		menuList.forEach((menuObj)=>{
 			if(menuObj.children instanceof Array){
@@ -83,6 +86,7 @@ class Header extends Component {
 				if(menuObj.key === menuKey) title = menuObj.title
 			}
 		})
+		this.props.saveMenuTitle(title)
 		return title
 	}
 
@@ -101,7 +105,7 @@ class Header extends Component {
 				</div>
 				<div className="header-bottom">
 					<div className="header-bottom-left">
-					<span>{this.getTitle(menuKey)}</span>
+					<span>{this.props.title || this.getTitle(menuKey)}</span>
 					</div>
 					<div className="header-bottom-right">
 						<span>{this.state.date}</span>

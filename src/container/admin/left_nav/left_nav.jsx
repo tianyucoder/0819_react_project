@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {Menu,Icon} from 'antd';
+import {connect} from 'react-redux'
+import {saveMenuTitle} from '../../../redux/actions/menu_action'
 import {Link,withRouter} from 'react-router-dom'
 import menuList from '../../../config/menu-config'
 import logo from '../../../static/images/logo.png'
@@ -7,6 +9,10 @@ import './left_nav.less'
 
 const {SubMenu,Item} = Menu;
 
+@connect(
+	state => ({}),
+	{saveMenuTitle}
+)
 @withRouter
 class LeftNav extends Component {
 
@@ -14,7 +20,7 @@ class LeftNav extends Component {
 		return list.map((menuObj)=>{
 			if(!menuObj.children){
 				return (
-					<Item key={menuObj.key}>
+					<Item key={menuObj.key} onClick={()=>{this.props.saveMenuTitle(menuObj.title)}}>
 						<Link to={menuObj.path}>
 							<Icon type={menuObj.icon} />
 							<span>{menuObj.title}</span>
