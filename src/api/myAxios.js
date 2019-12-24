@@ -2,6 +2,7 @@ import axios from 'axios'
 import {message} from 'antd'
 import NProgress from 'nprogress'
 import store from '../redux/store'
+import {deleteUserInfo} from '../redux/actions/login_action'
 import {BASE_URL} from '../config'
 import qs from 'querystring'
 import 'nprogress/nprogress.css'
@@ -32,8 +33,13 @@ axios.interceptors.response.use(
 	},
 	(error)=>{
 		NProgress.done()
-		//统一处理所有请求失败
-		message.error('请求出错，请联系管理员')
+		if(error.response.status === 401){
+			message.error('身份验证失败，请重新登录')
+			store.dispatch(deleteUserInfo())
+		}else{
+			//统一处理所有请求失败
+			message.error('请求出错，请联系管理员')
+		}
 		return new Promise(()=>{})//中断Promise链
 	})
 
