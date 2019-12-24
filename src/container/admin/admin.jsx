@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Layout} from 'antd';
-import {Switch,Route} from 'react-router-dom'
+import {Switch,Route,Redirect} from 'react-router-dom'
 import checkLogin from '../check_login/check_login'
 import {deleteUserInfo} from '../../redux/actions/login_action'
 import Header from './header/header'
@@ -43,6 +43,7 @@ class Admin extends Component {
 							<Route path="/admin/charts/bar" component={Bar}/>
 							<Route path="/admin/charts/line" component={Line}/>
 							<Route path="/admin/charts/pie" component={Pie}/>
+							<Redirect to="/admin/home"/>
 						</Switch>
 					</Content>
 					<Footer className="footer">推荐使用谷歌浏览器，获取最佳用户体验</Footer>

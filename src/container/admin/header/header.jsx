@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import {Icon,Button,Modal} from 'antd';
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import dayjs from 'dayjs'
 import {reqWeatherData} from '../../../api'
+import menuList from '../../../config/menu-config'
 import {deleteUserInfo} from '../../../redux/actions/login_action'
 import screenfull from 'screenfull'
 import './header.less'
@@ -13,6 +15,7 @@ const {confirm} = Modal;
 	state => ({userInfo:state.userInfo}),
 	{deleteUserInfo}
 )
+@withRouter
 class Header extends Component {
 
 	state = {
@@ -68,9 +71,25 @@ class Header extends Component {
 		clearInterval(this.time)
 	}
 
+	getTitle = (menuKey)=>{
+		let title = ''
+		menuList.forEach((menuObj)=>{
+			if(menuObj.children instanceof Array){
+				let result = menuObj.children.find((menuChildrenObj)=>{
+					return menuChildrenObj.key === menuKey
+				})
+				if(result) title = result.title
+			}else{
+				if(menuObj.key === menuKey) title = menuObj.title
+			}
+		})
+		return title
+	}
+
 	render() {
 		const {username} = this.props.userInfo.user
 		const {img,weather,temperature} = this.state.weatherData
+		const menuKey = this.props.history.location.pathname.split('/').reverse()[0]
 		return (
 			<div className="header">
 				<div className="header-top">
@@ -82,7 +101,7 @@ class Header extends Component {
 				</div>
 				<div className="header-bottom">
 					<div className="header-bottom-left">
-						<span>首页</span>
+					<span>{this.getTitle(menuKey)}</span>
 					</div>
 					<div className="header-bottom-right">
 						<span>{this.state.date}</span>
