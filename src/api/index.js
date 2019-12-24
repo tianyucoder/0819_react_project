@@ -17,6 +17,6 @@ export const reqWeatherData = () => {
 		})
 	})
 }
-//请求商品分类信息
-export const reqCategory = () => myAxios.get('/manage/category/list')
+//请求商品分类列表
+export const reqCategoryList = () => myAxios.get('/manage/category/list')
 
