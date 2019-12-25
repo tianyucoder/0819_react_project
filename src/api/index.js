@@ -26,11 +26,11 @@ export const reqUpdateCategory = (categoryId,categoryName) => myAxios.post('/man
 //获取商品列表
 export const reqProductList = (pageNum,pageSize) => myAxios.get('/manage/product/list',{params:{pageNum,pageSize}})
 //搜索商品（按名称或按描述）
-export const reqSearchProduct = (searchType,keyWrod,pageNum,pageSize) => 
-	myAxios.get('/manage/product/search',{params:{[searchType]:keyWrod,pageNum,pageSize}})
-
-
-
+export const reqSearchProduct = (searchType,keyWrod,pageNum,pageSize) => myAxios.get('/manage/product/search',{params:{[searchType]:keyWrod,pageNum,pageSize}})
+//更新商品状态
+export const reqUpdateProductStatus = (productId,status) => myAxios.post('/manage/product/updateStatus',{productId,status})
+//请求商品详细信息
+export const reqProductById = (productId) => myAxios.get('/manage/product/info',{params:{productId}})
 
 
 

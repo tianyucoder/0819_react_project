@@ -74,7 +74,7 @@ class Header extends Component {
 
 	//根据菜单的key匹配菜单的title
 	getTitle = (menuKey)=>{
-		//console.log('----redux中没有title，只能靠getTitle计算---------');
+		console.log('----redux中没有title，只能靠getTitle计算---------');
 		let title = ''
 		menuList.forEach((menuObj)=>{
 			if(menuObj.children instanceof Array){
@@ -93,7 +93,11 @@ class Header extends Component {
 	render() {
 		const {username} = this.props.userInfo.user
 		const {img,weather,temperature} = this.state.weatherData
-		const menuKey = this.props.history.location.pathname.split('/').reverse()[0]
+		const {pathname} = this.props.history.location
+		let menuKey = pathname.split('/').reverse()[0]
+		if(pathname.indexOf('/product') !== -1){
+			menuKey = 'product'
+		}
 		return (
 			<div className="header">
 				<div className="header-top">

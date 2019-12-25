@@ -60,7 +60,7 @@ class LeftNav extends Component {
 					<h1>商品管理系统</h1>
 				</div>
         <Menu
-          selectedKeys={[pathname.split('/').reverse()[0]]} //自动选中哪个菜单,此处不要使用defaultSelectedKeys,会造成第二次设置失效。
+          selectedKeys={[pathname.indexOf('/product') !== -1 ? 'product' : pathname.split('/').reverse()[0]]} //自动选中哪个菜单,此处不要使用defaultSelectedKeys,会造成第二次设置失效。
           defaultOpenKeys={pathname.split('/').splice(2)} //自动打开哪个菜单
           mode="inline"
           theme="dark"
