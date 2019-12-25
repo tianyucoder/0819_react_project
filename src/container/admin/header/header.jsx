@@ -74,7 +74,7 @@ class Header extends Component {
 
 	//根据菜单的key匹配菜单的title
 	getTitle = (menuKey)=>{
-		console.log('----redux中没有title，只能靠getTitle计算---------');
+		//console.log('----redux中没有title，只能靠getTitle计算---------');
 		let title = ''
 		menuList.forEach((menuObj)=>{
 			if(menuObj.children instanceof Array){

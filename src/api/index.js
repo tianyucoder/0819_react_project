@@ -19,6 +19,25 @@ export const reqWeatherData = () => {
 }
 //请求商品分类列表
 export const reqCategoryList = () => myAxios.get('/manage/category/list')
-
 //添加商品分类
 export const reqAddCategory = ({categoryName}) => myAxios.post('/manage/category/add',{categoryName})
+//更新分类
+export const reqUpdateCategory = (categoryId,categoryName) => myAxios.post('/manage/category/update',{categoryId,categoryName})
+//获取商品列表
+export const reqProductList = (pageNum,pageSize) => myAxios.get('/manage/product/list',{params:{pageNum,pageSize}})
+//搜索商品（按名称或按描述）
+export const reqSearchProduct = (searchType,keyWrod,pageNum,pageSize) => 
+	myAxios.get('/manage/product/search',{params:{[searchType]:keyWrod,pageNum,pageSize}})
+
+
+
+
+
+
+
+
+
+
+
+
+
