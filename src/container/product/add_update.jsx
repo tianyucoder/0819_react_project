@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux' 
 import {getCategoryListAsync} from '../../redux/actions/category_action'
 import PicturesWall from './pictures_wall'
+import RichTextEditor from './rich_text_editor'
 import {Card,Button,Icon,Form,Input,Select} from 'antd'
 
 const {Item} = Form
@@ -15,7 +16,7 @@ const {Option} = Select
 class AddUpdate extends Component {
 
 	componentDidMount(){
-		if(!this.props.categoryList){
+		if(!this.props.categoryList.length){
 			this.props.getCategoryListAsync()
 		}
 	}
@@ -24,7 +25,8 @@ class AddUpdate extends Component {
     event.preventDefault()
     this.props.form.validateFields((err, values) => {
       if(!err){
-				console.log('发送请求',values);
+				values.imgs = this.refs.picturesWall.getPictureNameArr()
+				console.log(values);
 			}
     });
   }
@@ -78,10 +80,10 @@ class AddUpdate extends Component {
                 </Select>)}
             </Item>
             <Item label="商品图片">
-              <PicturesWall/>
+              <PicturesWall ref="picturesWall"/>
             </Item>
             <Item label="商品详情">
-              富文本组件
+              <RichTextEditor/>
             </Item>
             <Button type="primary" htmlType="submit">提交</Button>
           </Form>

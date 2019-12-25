@@ -17,7 +17,15 @@ export default class PicturesWall extends Component {
     previewVisible: false, //控制是否展示预览窗
     previewImage: '',//预览谁，url，base64
     fileList: [],
-  };
+	};
+	
+	getPictureNameArr = ()=>{
+		let arr = []
+		this.state.fileList.forEach((file)=>{
+			arr.push(file.name)
+		})
+		return arr
+	}
 
 	//关闭预览的回调
   handleCancel = () => this.setState({ previewVisible: false });
