@@ -14,7 +14,8 @@ const {Item} = List
 class Detail extends Component {
 
 	state = {
-		product:{imgs:[]} //当前商品的详细信息
+		product:{imgs:[]}, //当前商品的详细信息
+		isLoading:true
 	}
 
 	getCategoryName = ()=>{
@@ -31,6 +32,7 @@ class Detail extends Component {
 	getProductById = async()=>{
 		const {id} = this.props.match.params
 		let result = await reqProductById(id)
+		this.setState({isLoading:false})
 		const {status,data,msg} = result
 		if(status === 0){
 			this.setState({product:data})
@@ -45,15 +47,16 @@ class Detail extends Component {
 
 	render() {
 		return (
-			<Card title={
-				<div className='left-top'>
-            <Button type="link" size="small" onClick={this.props.history.goBack}>
-              <Icon type="arrow-left" style={{fontSize:'20px'}}/>
-            </Button>
-            <span>商品详情</span>
-          </div>
-			}>
-				<List>
+			<Card 
+				title={
+					<div className='left-top'>
+							<Button type="link" size="small" onClick={this.props.history.goBack}>
+								<Icon type="arrow-left" style={{fontSize:'20px'}}/>
+							</Button>
+							<span>商品详情</span>
+						</div>}
+			>
+				<List loading={this.state.isLoading}>
 					<Item>
 						<span className="detail-title">商品名称：</span>
 						<span>{this.state.product.name}</span>
