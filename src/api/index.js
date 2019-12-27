@@ -43,7 +43,8 @@ export const reqAddproduct = ({categoryId,name,desc,price,detail,imgs}) =>
 export const reqRoleList = () => myAxios.get('/manage/role/list')
 //添加角色
 export const reqAddRole = ({roleName}) => myAxios.post('/manage/role/add',{roleName})
-
+//给角色授权
+export const reqAuthRole = (_id,auth_name,menus) => myAxios.post('/manage/role/update',{_id,auth_name,menus,auth_time:Date.now()})
 
 
 

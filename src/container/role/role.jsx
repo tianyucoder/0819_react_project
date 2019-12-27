@@ -1,19 +1,26 @@
 import React, { Component } from 'react'
 import {Card,Table,Button,Icon,Modal,Form,Input, message,Tree } from 'antd';
 import dayjs from 'dayjs'
-import {reqRoleList,reqAddRole} from '../../api'
+import {connect} from 'react-redux'
+import {reqRoleList,reqAddRole,reqAuthRole} from '../../api'
+import {PAGE_SIZE} from '../../config'
+import menuList from '../../config/menu-config'
 
 const {Item} = Form
 const {TreeNode} = Tree;
 
+@connect(
+	state => ({username:state.userInfo.user.username}),
+	{}
+)
 @Form.create()
-class User extends Component {
+class Role extends Component {
 
 	state = {
 		visible:false, //控制新增角色显示
 		visibleAuth:false,//控制授权显示
 		roleList:[],
-    checkedKeys: ['0-0-0'],
+    checkedKeys: [],
 	}
 
 	//获取角色列表
@@ -58,7 +65,18 @@ class User extends Component {
 	}
 
 	//授权的确认回调
-	handleAuthOk = ()=>{
+	handleAuthOk = async()=>{
+		const {_id} = this
+		const {username} = this.props
+		const {checkedKeys} = this.state
+		let result = await reqAuthRole(_id,username,checkedKeys)
+		const {status,data,msg} = result 
+		if(status === 0){
+			message.success('授权成功')
+			this.getRoleList()
+		}else{
+			message.warning(msg)
+		}
 		this.setState({visibleAuth:false})
 	}
 
@@ -68,7 +86,7 @@ class User extends Component {
 	}
 
   onCheck = checkedKeys => {
-    console.log('onCheck', checkedKeys);
+    //console.log('onCheck', checkedKeys);
     this.setState({ checkedKeys });
   };
 
@@ -117,56 +135,25 @@ class User extends Component {
 			},
 			{
 				title: '操作',
-				//dataIndex: 'address',
+				dataIndex: '_id',
 				key: 'opera',
 				width:"15%",
 				align:"center",
-				render:()=>(<Button type="link" onClick={()=>{this.setState({visibleAuth:true})}}>设置权限</Button>)
+				render:(_id)=>(
+					<Button type="link" 
+						onClick={()=>{
+							this._id = _id
+							let result = this.state.roleList.find((item)=>{
+								return item._id === _id
+							})
+							if(result) this.setState({checkedKeys:result.menus})
+							this.setState({visibleAuth:true})
+						}}>
+						设置权限
+					</Button>)
 			},
 		];
-		const treeData = [
-			{
-				title: '0-0',
-				key: '0-0',
-				children: [
-					{
-						title: '0-0-0',
-						key: '0-0-0',
-						children: [
-							{ title: '0-0-0-0', key: '0-0-0-0' },
-							{ title: '0-0-0-1', key: '0-0-0-1' },
-							{ title: '0-0-0-2', key: '0-0-0-2' },
-						],
-					},
-					{
-						title: '0-0-1',
-						key: '0-0-1',
-						children: [
-							{ title: '0-0-1-0', key: '0-0-1-0' },
-							{ title: '0-0-1-1', key: '0-0-1-1' },
-							{ title: '0-0-1-2', key: '0-0-1-2' },
-						],
-					},
-					{
-						title: '0-0-2',
-						key: '0-0-2',
-					},
-				],
-			},
-			{
-				title: '0-1',
-				key: '0-1',
-				children: [
-					{ title: '0-1-0-0', key: '0-1-0-0' },
-					{ title: '0-1-0-1', key: '0-1-0-1' },
-					{ title: '0-1-0-2', key: '0-1-0-2' },
-				],
-			},
-			{
-				title: '0-2',
-				key: '0-2',
-			},
-		];
+		const treeData = menuList
 		const {getFieldDecorator} = this.props.form
 		return (
 			<Card 
@@ -181,6 +168,7 @@ class User extends Component {
 					columns={columns}
 					bordered
 					rowKey="_id"
+					pagination={{pageSize:PAGE_SIZE}}
 				/>
 				{/* 新增角色弹窗 */}
 				<Modal
@@ -211,9 +199,11 @@ class User extends Component {
 						checkable //树的节点是否可以选择
 						onCheck={this.onCheck}//选择某个菜单的回调
 						checkedKeys={this.state.checkedKeys}//默认选择哪一个
-						defaultExpandAll
+						defaultExpandAll//默认打开所有的节点
 					>
-						{this.renderTreeNodes(treeData)}
+						<TreeNode title="平台功能" key="top">
+							{this.renderTreeNodes(treeData)}
+						</TreeNode>
 					</Tree>
         </Modal>
 			</Card>
@@ -221,4 +211,4 @@ class User extends Component {
 	}
 }
 
-export default User
+export default Role
