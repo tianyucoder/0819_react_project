@@ -78,7 +78,7 @@ export default class PicturesWall extends Component {
     return (
       <div className="clearfix">
         <Upload
-					action="http://localhost:3000/manage/img/upload"
+					action={`${BASE_URL}/manage/img/upload`}
 					method="POST"
 					name="image"
           listType="picture-card"

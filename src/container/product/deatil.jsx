@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getCategoryListAsync} from '../../redux/actions/category_action'
 import {reqProductById} from '../../api'
 import './detail.less'
+import { BASE_URL } from '../../config'
 
 const {Item} = List
 
@@ -77,7 +78,7 @@ class Detail extends Component {
 						<span className="detail-title">商品图片：</span>
 						{
 							this.state.product.imgs.map((item,index)=>{
-								return <img key={index} src={'/upload/'+item}alt=""/>
+								return <img key={index} src={`${BASE_URL}/upload/`+item}alt=""/>
 							})
 						}
 					</Item>
