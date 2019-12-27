@@ -34,7 +34,7 @@ export const reqProductById = (productId) => myAxios.get('/manage/product/info',
 //添加商品
 export const reqAddproduct = ({categoryId,name,desc,price,detail,imgs}) =>
  myAxios.post('/manage/product/add',{categoryId,name,desc,price,detail,imgs})
-//删除已经上传的图片
+
  export const reqDeletePicture = (name) => myAxios.post('/manage/img/delete',{name})
 
 

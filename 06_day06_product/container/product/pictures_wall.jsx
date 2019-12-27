@@ -46,7 +46,6 @@ export default class PicturesWall extends Component {
   handleChange = async({file,fileList}) =>{
 		if(file.status === 'done'){
 			fileList[fileList.length-1].name = file.response.data.name
-			fileList[fileList.length-1].url = file.response.data.url
 		}
 		if(file.status === 'removed'){
 			let result = await reqDeletePicture(file.name)
