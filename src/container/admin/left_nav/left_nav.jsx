@@ -10,36 +10,48 @@ import './left_nav.less'
 const {SubMenu,Item} = Menu;
 
 @connect(
-	state => ({}),
+	state => ({menus:state.userInfo.user.role.menus,username:state.userInfo.user.username}),
 	{saveMenuTitle}
 )
 @withRouter
 class LeftNav extends Component {
 
+	hasAuth = (menuObj)=>{
+		const {menus} = this.props
+		if(this.props.username === 'admin') return true
+		if(!menuObj.children){
+			return menus.find((item)=> item === menuObj.key)
+		}else{
+			return menuObj.children.some((item2)=> menus.indexOf(item2.key) !== -1 )
+		}
+	}
+
 	createMenu = (list)=>{
 		return list.map((menuObj)=>{
-			if(!menuObj.children){
-				return (
-					<Item key={menuObj.key} onClick={()=>{this.props.saveMenuTitle(menuObj.title)}}>
-						<Link to={menuObj.path}>
-							<Icon type={menuObj.icon} />
-							<span>{menuObj.title}</span>
-						</Link>
-					</Item>
-				)
-			}else{
-				return (
-					<SubMenu
-						key={menuObj.key}
-						title={
-							<span>
+			if(this.hasAuth(menuObj)){
+				if(!menuObj.children){
+					return (
+						<Item key={menuObj.key} onClick={()=>{this.props.saveMenuTitle(menuObj.title)}}>
+							<Link to={menuObj.path}>
 								<Icon type={menuObj.icon} />
 								<span>{menuObj.title}</span>
-							</span>
-					}>
-						{this.createMenu(menuObj.children)}
-					</SubMenu>
-				)
+							</Link>
+						</Item>
+					)
+				}else{
+					return (
+						<SubMenu
+							key={menuObj.key}
+							title={
+								<span>
+									<Icon type={menuObj.icon} />
+									<span>{menuObj.title}</span>
+								</span>
+						}>
+							{this.createMenu(menuObj.children)}
+						</SubMenu>
+					)
+				}
 			}
 		})
 	}

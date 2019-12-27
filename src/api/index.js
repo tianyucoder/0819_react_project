@@ -45,6 +45,11 @@ export const reqRoleList = () => myAxios.get('/manage/role/list')
 export const reqAddRole = ({roleName}) => myAxios.post('/manage/role/add',{roleName})
 //给角色授权
 export const reqAuthRole = (_id,auth_name,menus) => myAxios.post('/manage/role/update',{_id,auth_name,menus,auth_time:Date.now()})
+//获取所有用户列表
+export const reqUserList = () => myAxios.get('/manage/user/list')
+//新增用户
+export const reqAddUser = ({username,password,phone,email,role_id}) => 
+	myAxios.post('/manage/user/add',{username,password,phone,email,role_id})
 
 
 
