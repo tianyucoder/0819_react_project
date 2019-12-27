@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {reqDeletePicture} from '../../api'
+import {BASE_URL} from '../../config'
 import { Upload, Icon, Modal, message } from 'antd';
 
 //将图片转换为base64
@@ -16,7 +17,8 @@ export default class PicturesWall extends Component {
   state = {
     previewVisible: false, //控制是否展示预览窗
     previewImage: '',//预览谁，url，base64
-    fileList: [],
+    fileList: [
+		],
 	};
 	
 	getPictureNameArr = ()=>{
@@ -25,6 +27,14 @@ export default class PicturesWall extends Component {
 			arr.push(file.name)
 		})
 		return arr
+	}
+
+	setPictureNameArr = (imgNameArr)=>{
+		let arr = []
+		imgNameArr.forEach((imgName,index)=>{
+			arr.push({uid:-index,name:imgName,url:`${BASE_URL}/upload/${imgName}`})
+		})
+		this.setState({fileList:arr})
 	}
 
 	//关闭预览的回调

@@ -36,8 +36,13 @@ export const reqAddproduct = ({categoryId,name,desc,price,detail,imgs}) =>
  myAxios.post('/manage/product/add',{categoryId,name,desc,price,detail,imgs})
 //删除已经上传的图片
  export const reqDeletePicture = (name) => myAxios.post('/manage/img/delete',{name})
-
-
+//更新商品
+ export const reqUpdateProduct = ({ _id,categoryId,name,desc,price,detail,imgs}) => 
+ 	myAxios.post('/manage/product/update',{_id,categoryId,name,desc,price,detail,imgs})
+//获取所有角色列表
+export const reqRoleList = () => myAxios.get('/manage/role/list')
+//添加角色
+export const reqAddRole = ({roleName}) => myAxios.post('/manage/role/add',{roleName})
 
 
 
