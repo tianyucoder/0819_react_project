@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import {reqWeatherData} from '../../../api'
 import menuList from '../../../config/menu-config'
 import {deleteUserInfo} from '../../../redux/actions/login_action'
-import {saveMenuTitle} from '../../../redux/actions/menu_action'
+import {saveMenuTitle,deletMenuTitle} from '../../../redux/actions/menu_action'
 import screenfull from 'screenfull'
 import './header.less'
 
@@ -14,7 +14,7 @@ const {confirm} = Modal;
 
 @connect(
 	state => ({userInfo:state.userInfo,title:state.title}),
-	{deleteUserInfo,saveMenuTitle}
+	{deleteUserInfo,saveMenuTitle,deletMenuTitle}
 )
 @withRouter
 class Header extends Component {
@@ -34,6 +34,7 @@ class Header extends Component {
 			okText:'确定',
 			onOk:()=> {
 				this.props.deleteUserInfo()
+				this.props.deletMenuTitle()
 			},
 		});
 	}

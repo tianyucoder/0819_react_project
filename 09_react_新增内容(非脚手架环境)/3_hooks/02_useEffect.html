@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>useEffect</title>
+</head>
+<body>
+
+<div id="demo"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+
+<script type="text/babel">
+
+/* class Counter_Class extends React.Component {
+    state = {
+      count: 0,
+			name:'kobe'
+    }
+
+		add = ()=>{
+			this.setState({count:this.state.count + 1})
+		}
+
+		death = ()=>{
+			ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+		}
+
+		componentDidMount(){
+			this.id = setInterval(() => {
+				this.setState({count:this.state.count+1})
+			}, 1000);
+		}
+
+		componentWillUnmount(){
+			clearInterval(this.id)
+		}
+
+    render () {
+      return (
+        <div>
+          <p>你点击了 {this.state.count} times</p>
+          <button onClick={this.add}>点我</button>
+          <button onClick={this.death}>卸载组件</button>
+
+        </div>
+      )
+    }
+  }  */
+
+
+	function Counter_Function(params) {
+		console.log('Counter_Function');
+		const [count,setCount] = React.useState(0) 
+		const [name,setName] = React.useState('kobe') 
+
+		function death(params) {
+			ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+		}
+
+		function add() {
+			//setCount(count+1)
+			setCount((count)=> count+1)
+		}
+
+		let timeId
+
+		React.useEffect(()=>{
+			timeId =setInterval(() => {
+				setCount((count)=> count+1)
+			}, 1000);
+			return ()=>{
+				clearInterval(timeId)
+			}
+		},[])
+		return (
+        <div>
+          <p>你点击了 {count} times</p>
+          <p>你的名字是 {name}</p>
+          <button onClick={add}>点我</button>
+					<button onClick={death}>卸载组件</button>
+        </div>
+      )
+	}
+
+	//ReactDOM.render(<Counter_Class/>, document.getElementById('demo'))
+	ReactDOM.render(<Counter_Function/>, document.getElementById('demo'))
+
+</script>
+</body>
+</html>
+

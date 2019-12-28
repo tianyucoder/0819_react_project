@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>04_component_state</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+
+  /*
+  1. Component存在的问题?
+      1). 父组件重新render(), 子组件也会重新执行render(), 即使没有任何变化
+      2). 当前组件setState(), 子组件重新执行render(), 即使state没有任何变化
+
+  2. 解决Component存在的问题
+      1). 原因: 组件的shouldComponentUpdate()默认返回true, 即使数据没有变化render()都会重新执行
+      2). 办法1(推荐): 使用PureComponent代替Component
+			3). 办法2: 重写shouldComponentUpdate(), 判断如果数据有变化返回true, 否则返回false
+      4). 说明: 一般都使用PureComponent来优化组件性能
+
+  3. PureComponent的基本原理
+      1). 重写实现shouldComponentUpdate()
+      2). 对组件的新/旧state和props中的数据进行浅比较, 如果没有变化, 返回false, 否则返回true
+
+  4. 面试题:
+      组件的哪个生命周期勾子能实现组件优化?
+      PureComponent的原理?
+      区别Component与PureComponent?
+   */
+
+  class Parent extends React.PureComponent {
+    state = {
+      cars: {name1:'奔驰'},
+      price: 1000000
+    }
+
+    test1 = () => {
+			let cars = this.state.cars
+			cars.name1 = '宝马'
+      this.setState({cars})
+		}
+		
+    render() {
+      console.log('Parent render()')
+      return (
+        <div>
+					<h1>Parent组件:</h1>
+					<h3>自己的cars.name1={this.state.cars.name1}</h3>
+          <button onClick={this.test1}>test1</button>
+          <hr/>
+          <Child cars={this.state.cars}/>
+        </div>
+      )
+    }
+  }
+
+  class Child extends React.PureComponent {
+    state = {
+      computers:{name1:'联想'}
+    }
+
+		/* shouldComponentUpdate(props,state){
+			return !(props.cars === this.props.cars && state.computers === this.state.computers)
+		} */
+
+    test2 = () => {
+      this.setState({computers:{name1:'华硕'}})
+		}
+		
+    render() {
+      console.log('Child render()')
+      return (
+        <div>
+          <h1>Child组件: </h1>
+          <button onClick={this.test2}>test2</button>
+          <h3>自己的computers.name1={this.state.computers.name1}</h3>
+          <h3>Parent的cars.name1={this.props.cars.name1}</h3>
+        </div>
+      )
+    }
+  }
+
+  ReactDOM.render(<Parent/>, document.getElementById('example'))
+
+</script>
+</body>
+</html>
+

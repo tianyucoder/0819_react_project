@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>useRef</title>
+</head>
+<body>
+
+<div id="demo"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+	
+	function Counter_Function() {
+
+		let myRef = React.createRef()
+
+		function show(params) {
+			alert(myRef.current.value)
+		}
+
+		return (
+			<div>
+				<input type="text" ref={myRef}/>
+				<button onClick={show}>
+					点我提示
+				</button>
+			</div>
+		)
+	}
+
+	//ReactDOM.render(<Counter_Class/>, document.getElementById('example1'))
+	ReactDOM.render(<Counter_Function/>, document.getElementById('demo'))
+</script>
+</body>
+</html>
+
