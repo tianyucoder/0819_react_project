@@ -1,0 +1,15 @@
+{
+	"title": "硅谷后台",
+	"menus": {
+		"home": "首页",
+		"prod_about":"商品",
+		"category":"分类管理",
+		"product":"商品管理",
+		"user":"用户管理",
+		"role":"角色管理",
+		"charts":"图形图表",
+		"bar":"柱形图",
+		"line":"折线图",
+		"pie":"饼图"
+	}
+}

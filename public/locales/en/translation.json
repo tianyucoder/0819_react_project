@@ -1,0 +1,15 @@
+{
+	"title": "GG ADMIN",
+	"menus": {
+		"home": "home",
+		"prod_about":"prodAbout",
+		"category":"category",
+		"product":"product",
+		"user":"user",
+		"role":"role",
+		"charts":"charts",
+		"bar":"bar",
+		"line":"line",
+		"pie":"pie"
+	}
+}

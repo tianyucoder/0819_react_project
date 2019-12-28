@@ -13,9 +13,9 @@ import AddUpdate from '../product/add_update'
 import Deatil from '../product/deatil'
 import User from '../user/user'
 import Role from '../role/role'
-import Bar from '../bar/bar'
-import Line from '../line/line'
-import Pie from '../pie/pie'
+import Bar from '../../components/bar/bar'
+import Line from '../../components/line/line'
+import Pie from '../../components/pie/pie'
 import './css/admin.less'
 const { Footer, Sider, Content} = Layout;
 

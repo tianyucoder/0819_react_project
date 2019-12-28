@@ -3,6 +3,7 @@ import {Menu,Icon} from 'antd';
 import {connect} from 'react-redux'
 import {saveMenuTitle} from '../../../redux/actions/menu_action'
 import {Link,withRouter} from 'react-router-dom'
+import {withTranslation, getI18n} from 'react-i18next'
 import menuList from '../../../config/menu-config'
 import logo from '../../../static/images/logo.png'
 import './left_nav.less'
@@ -14,6 +15,7 @@ const {SubMenu,Item} = Menu;
 	{saveMenuTitle}
 )
 @withRouter
+@withTranslation()
 class LeftNav extends Component {
 
 	hasAuth = (menuObj)=>{
@@ -26,6 +28,12 @@ class LeftNav extends Component {
 		}
 	}
 
+	componentDidMount(){
+		/* setTimeout(()=>{
+			this.props.i18n.changeLanguage('en')
+		},2000) */
+	}
+
 	createMenu = (list)=>{
 		return list.map((menuObj)=>{
 			if(this.hasAuth(menuObj)){
@@ -34,7 +42,7 @@ class LeftNav extends Component {
 						<Item key={menuObj.key} onClick={()=>{this.props.saveMenuTitle(menuObj.title)}}>
 							<Link to={menuObj.path}>
 								<Icon type={menuObj.icon} />
-								<span>{menuObj.title}</span>
+								<span>{this.props.t('menus.'+menuObj.key)}</span>
 							</Link>
 						</Item>
 					)
@@ -45,7 +53,7 @@ class LeftNav extends Component {
 							title={
 								<span>
 									<Icon type={menuObj.icon} />
-									<span>{menuObj.title}</span>
+									<span>{this.props.t('menus.'+menuObj.key)}</span>
 								</span>
 						}>
 							{this.createMenu(menuObj.children)}

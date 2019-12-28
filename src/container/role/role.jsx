@@ -70,7 +70,7 @@ class Role extends Component {
 		const {username} = this.props
 		const {checkedKeys} = this.state
 		let result = await reqAuthRole(_id,username,checkedKeys)
-		const {status,data,msg} = result 
+		const {status,msg} = result 
 		if(status === 0){
 			message.success('授权成功')
 			this.getRoleList()
